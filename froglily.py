@@ -71,29 +71,34 @@ def take_action(obs, numJumps):
     # also return observation ([num_lilies, frog_position])
     return new_obs, reward, terminated, win
 
+def randomAction(obs): 
+    return 1 + (int)(random.random() * (obs[0] - obs[1]))
+
+
 # build a probability simulation
 # how many times do you win out of 1000: 76/1000
 
-# run simulation: create choose_action method
-'''
-wins = 0
-for sims in range(1000): 
-    # starting number
-    obs = [num_lilies, frog_position]
-    print(obs)
+# run simulation: pass in function choose_action
+def run_simulation(choose_action, numSims=1000):
+    wins = 0
+    for _ in range(numSims): 
+        # starting number
+        obs = [num_lilies, frog_position]
 
-    while True: 
-        # num_lilies and frog position changes
-        obs, _, term, win = take_action(obs, 1 + (int)(random.random() * (obs[0] - obs[1])))
-        print(obs[1])
+        while True: 
+            # num_lilies and frog position changes
+            obs, _, term, win = take_action(obs, choose_action(obs))
 
-        if term: 
-            if win:
-                wins += 1
-            break
+            if term: 
+                if win:
+                    wins += 1
+                break
 
-print("Wins: " +  str(wins) + "/1000")
-'''
+    print("Wins: " +  str(wins) + "/" + str(numSims))
+
+run_simulation(randomAction)
+
+
     
 
 

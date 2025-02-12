@@ -37,6 +37,22 @@ for state in range(N-1, 1, -1):
 # print(qtable)
 
 # based on q-table and actually possible actions pick best action
+# obs: [num_lilies, frog_position]
+def qtableAction(obs): 
+    bestAct = np.argmax(qtable[obs[1] - 1]) + 1
+
+    # not possible
+    if (bestAct > (obs[0] - obs[1])) : 
+        # select random action 
+        bestAct = froglily.randomAction(obs)
+
+    
+    return bestAct
+
+# 57/100 -> 730/1000
+# 63/100 -> 995/1000
+# WHAT AN IMPROVEMENT!
+froglily.run_simulation(qtableAction)
 
 
     
